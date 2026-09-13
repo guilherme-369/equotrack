@@ -1,0 +1,59 @@
+@media print {
+  @page equotrack-report {
+    margin: 16mm;
+  }
+
+  body:has(.reports-page) {
+    background: white;
+  }
+
+  body:has(.reports-page) #root > div {
+    display: block;
+    min-height: 0;
+  }
+
+  body:has(.reports-page) #root > div > header,
+  body:has(.reports-page) #root > div > a,
+  .reports-page .report-screen-only {
+    display: none !important;
+  }
+
+  body:has(.reports-page) #main-content {
+    padding: 0;
+  }
+
+  .reports-page {
+    page: equotrack-report;
+    max-width: none;
+  }
+
+  .reports-page > section,
+  .reports-page .report-document {
+    margin: 0;
+  }
+
+  .reports-page .report-document {
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .report-document h3,
+  .report-document h4,
+  .report-document h5 {
+    break-after: avoid;
+  }
+
+  .report-session,
+  .report-observation-group,
+  .report-document footer {
+    break-inside: avoid;
+  }
+
+  .report-document p,
+  .report-document dd {
+    orphans: 3;
+    widows: 3;
+  }
+}
