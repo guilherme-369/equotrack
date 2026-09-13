@@ -2,32 +2,8 @@ import { useEffect, useState } from 'react'
 import { ChevronRight, Search } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
-type Practitioner = {
-  id: string
-  name: string
-  lastSession: string
-  status: 'Ativo' | 'Pausado'
-}
-
-// Fictional data for the academic prototype.
-const practitioners: Practitioner[] = [
-  { id: 'ana-beatriz', name: 'Ana Beatriz', lastSession: '2026-09-11', status: 'Ativo' },
-  { id: 'gabriel-silva', name: 'Gabriel Silva', lastSession: '2026-09-10', status: 'Ativo' },
-  { id: 'lucas-martins', name: 'Lucas Martins', lastSession: '2026-09-11', status: 'Ativo' },
-  { id: 'marina-alves', name: 'Marina Alves', lastSession: '2026-09-10', status: 'Ativo' },
-  { id: 'pedro-lima', name: 'Pedro Lima', lastSession: '2026-09-08', status: 'Ativo' },
-  { id: 'carlos-eduardo', name: 'Carlos Eduardo', lastSession: '2026-09-02', status: 'Pausado' },
-  { id: 'helena-rocha', name: 'Helena Rocha', lastSession: '2026-09-04', status: 'Pausado' },
-  { id: 'arthur-mendes', name: 'Arthur Mendes', lastSession: '2026-09-01', status: 'Pausado' },
-]
-
-function StatusBadge({ status }: { status: Practitioner['status'] }) {
-  return (
-    <span className={`inline-block rounded-badge px-2 py-1 text-small font-medium ${status === 'Ativo' ? 'bg-primary-soft text-primary' : 'bg-background text-muted'}`}>
-      {status}
-    </span>
-  )
-}
+import { practitioners } from '../data/practitioners'
+import StatusBadge from '../components/StatusBadge'
 
 function SessionDate({ date }: { date: string }) {
   return <time dateTime={date}>{date.split('-').reverse().join('/')}</time>
