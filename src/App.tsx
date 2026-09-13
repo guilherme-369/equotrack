@@ -4,6 +4,7 @@ import Dashboard from './pages/Dashboard'
 import PagePlaceholder from './pages/PagePlaceholder'
 import Practitioners from './pages/Practitioners'
 import PractitionerHistory from './pages/PractitionerHistory'
+import NewSession from './pages/NewSession'
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
           <Route index element={<Dashboard />} />
           <Route path="praticantes" element={<Practitioners />} />
           <Route path="praticantes/:id" element={<PractitionerHistory />} />
-          <Route path="sessoes/nova" element={<PagePlaceholder title="Nova sessão" description="Registro estruturado de uma sessão de equoterapia." />} />
+          <Route path="sessoes/nova" element={<NewSession />} />
           <Route path="relatorios" element={<PagePlaceholder title="Relatórios" description="Consolidação dos registros de sessões por praticante e período." />} />
         </Route>
       </Routes>

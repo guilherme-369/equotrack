@@ -38,7 +38,7 @@ export default function PractitionerHistory() {
                 Última sessão: <time dateTime={practitioner.lastSession}>{new Intl.DateTimeFormat('pt-BR', { dateStyle: 'long', timeZone: 'UTC' }).format(new Date(practitioner.lastSession))}</time>
               </p>
             </div>
-            <Link to="/sessoes/nova" className="inline-flex min-h-10 items-center justify-center gap-2 rounded-button bg-primary px-4 py-2 text-body font-medium text-surface hover:bg-primary-hover">
+            <Link to={`/sessoes/nova?praticante=${encodeURIComponent(practitioner.id)}`} className="inline-flex min-h-10 items-center justify-center gap-2 rounded-button bg-primary px-4 py-2 text-body font-medium text-surface hover:bg-primary-hover">
               <ClipboardPlus size={18} aria-hidden="true" />
               Nova sessão
             </Link>
