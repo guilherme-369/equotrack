@@ -24,16 +24,16 @@ function TimelineEntry({ session }: { session: SessionRecord }) {
   const Icon = expanded ? ChevronUp : ChevronDown
 
   return (
-    <li className="relative pb-8 pl-6 last:pb-0 md:pl-8">
-      <span aria-hidden="true" className="absolute top-1 -left-[5px] h-2 w-2 rounded-badge bg-primary" />
+    <li className="relative pb-10 pl-6 last:pb-0 md:pl-10">
+      <span aria-hidden="true" className="absolute top-1 -left-[7px] h-3 w-3 rounded-badge border-2 border-background bg-brand" />
       <article aria-labelledby={`session-${session.number}-heading`}>
-        <time dateTime={session.date} className="text-secondary font-medium text-muted tabular-nums">
+        <time dateTime={session.date} className="font-heading text-subsection font-semibold text-brand-dark tabular-nums">
           {session.date.split('-').reverse().join('/')}
         </time>
-        <h3 id={`session-${session.number}-heading`} className="mt-1 text-section font-semibold">Sessão #{session.number}</h3>
+        <h3 id={`session-${session.number}-heading`} className="mt-2 text-subsection font-semibold">Sessão #{session.number}</h3>
 
-        <div id={contentId} className="mt-4 space-y-4">
-          <div className="grid gap-6 md:grid-cols-2">
+        <div id={contentId} className="mt-6 space-y-6">
+          <div className="grid gap-6 rounded-card border border-border bg-surface p-5 md:grid-cols-2">
             <ObservationGroup title="Motor" observations={[
               ['Postura', session.posture], ['Equilíbrio', session.balance],
             ]} />
@@ -41,19 +41,17 @@ function TimelineEntry({ session }: { session: SessionRecord }) {
               ...(expanded ? [['Resposta a comandos', session.commandResponse] as [string, string]] : []),
               ['Engajamento', session.engagement],
             ]} />
-            {expanded && (
-              <ObservationGroup title="Comunicação e interação" observations={[
-                ['Comunicação', session.communication], ['Interação com o cavalo', session.horseInteraction],
-              ]} />
-            )}
+            {expanded && <ObservationGroup title="Comunicação e interação" observations={[
+              ['Comunicação', session.communication], ['Interação com o cavalo', session.horseInteraction],
+            ]} />}
           </div>
-          <div className="border-t border-border pt-4">
-            <h4 className="text-secondary font-semibold">Atividades</h4>
+          <div className="border-l-2 border-brand-soft pl-4">
+            <h4 className="text-secondary font-semibold text-brand-dark">Atividades</h4>
             <p className="mt-1 text-body">{session.activities}</p>
           </div>
-          <div>
-            <h4 className="text-secondary font-semibold">Observação</h4>
-            <p className="mt-1 text-body leading-6">
+          <div className="rounded-card bg-background p-5">
+            <h4 className="text-secondary font-semibold">Observação narrativa</h4>
+            <p className="mt-2 text-body leading-7">
               {expanded ? session.observation : `${session.observation.slice(0, session.observation.lastIndexOf(' ', 80))}…`}
             </p>
           </div>
@@ -65,7 +63,7 @@ function TimelineEntry({ session }: { session: SessionRecord }) {
           aria-controls={contentId}
           aria-label={`${expanded ? 'Recolher registro' : 'Ver registro completo'} da sessão ${session.number}`}
           onClick={() => setExpanded(!expanded)}
-          className="mt-3 inline-flex min-h-10 cursor-pointer items-center gap-2 rounded-button text-secondary font-medium text-primary hover:text-primary-hover hover:underline"
+          className="ui-link mt-3 text-secondary"
         >
           {expanded ? 'Recolher registro' : 'Ver registro completo'}
           <Icon size={16} aria-hidden="true" />

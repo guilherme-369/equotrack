@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react'
+import { AlertCircle, CheckCircle2, Info } from 'lucide-react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { practitioners } from '../data/practitioners'
 
@@ -96,16 +97,19 @@ function SessionForm({ practitionerId }: { practitionerId: string }) {
 
   return (
     <form noValidate onSubmit={handleSubmit} onChange={() => setSaved(false)} className="space-y-8">
-      <div className="space-y-2 text-secondary text-muted">
-        <p>Os campos apresentados neste protótipo são demonstrativos e devem ser avaliados pela equipe profissional antes de eventual utilização assistencial.</p>
+      <div className="space-y-3 rounded-card border border-border bg-surface p-5 text-secondary text-muted">
+        <p className="flex items-start gap-3">
+          <Info size={18} aria-hidden="true" className="mt-0.5 shrink-0 text-action-strong" />
+          <span>Os campos apresentados neste protótipo são demonstrativos e devem ser avaliados pela equipe profissional antes de eventual utilização assistencial.</span>
+        </p>
         <p>* Campos obrigatórios.</p>
       </div>
 
       {sections.map(({ title, description, fields }) => (
-        <fieldset key={title} className="min-w-0 border-t border-border">
-          <legend className="pr-3 text-section font-semibold">{title}</legend>
+        <fieldset key={title} className="min-w-0 border-t border-border pt-6">
+          <legend className="text-section font-semibold">{title}</legend>
           {description && <p className="mt-2 text-secondary text-muted">{description}</p>}
-          <div className="mt-5 grid grid-cols-1 gap-5 md:grid-cols-2">
+          <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
             {fields.map((field) => {
               const error = errors[field.name]
               const common = {
@@ -115,7 +119,7 @@ function SessionForm({ practitionerId }: { practitionerId: string }) {
                 defaultValue: field.name === 'practitioner' ? practitionerId : field.name === 'date' ? '2026-09-13' : '',
                 'aria-invalid': error ? true : undefined,
                 'aria-describedby': error ? `session-${field.name}-error` : undefined,
-                className: `min-h-11 min-w-0 w-full rounded-input border bg-surface px-3 py-2 text-body placeholder:text-muted ${error ? 'border-danger' : 'border-border'}`,
+                className: 'ui-control',
                 onChange: () => setErrors((current) => {
                   if (!current[field.name]) return current
                   const next = { ...current }
@@ -138,7 +142,7 @@ function SessionForm({ practitionerId }: { practitionerId: string }) {
                   ) : (
                     <input {...common} type={field.type} />
                   )}
-                  {error && <p id={common['aria-describedby']} className="mt-1 text-secondary text-danger">{error}</p>}
+                  {error && <p id={common['aria-describedby']} className="mt-2 flex items-start gap-2 text-secondary text-danger"><AlertCircle size={16} aria-hidden="true" className="mt-0.5 shrink-0" />{error}</p>}
                 </div>
               )
             })}
@@ -146,17 +150,17 @@ function SessionForm({ practitionerId }: { practitionerId: string }) {
         </fieldset>
       ))}
 
-      <div className="border-t border-border pt-5">
-        {Object.keys(errors).length > 0 && <p role="alert" className="mb-4 text-secondary text-danger">Revise os campos indicados antes de salvar o registro.</p>}
+      <div className="border-t border-border pt-8">
+        {Object.keys(errors).length > 0 && <p role="alert" className="mb-5 flex items-start gap-2 text-secondary text-danger"><AlertCircle size={16} aria-hidden="true" className="mt-0.5 shrink-0" />Revise os campos indicados antes de salvar o registro.</p>}
         {saved && (
-          <div ref={successRef} tabIndex={-1} role="status" className="mb-5 rounded-input bg-primary-soft p-4">
-            <p className="text-body font-medium text-primary">Registro simulado salvo com sucesso.</p>
-            <p className="mt-1 text-secondary text-muted">Este protótipo não realiza persistência em banco de dados.</p>
+          <div ref={successRef} tabIndex={-1} role="status" className="mb-6 rounded-card border border-border bg-brand-soft p-5">
+            <p className="flex items-start gap-3 text-body font-medium text-brand-dark"><CheckCircle2 size={18} aria-hidden="true" className="mt-0.5 shrink-0 text-brand" />Registro simulado salvo com sucesso.</p>
+            <p className="mt-1 text-secondary text-foreground">Este protótipo não realiza persistência em banco de dados.</p>
           </div>
         )}
-        <div className="flex flex-col gap-3 md:flex-row md:justify-end">
-          <button type="submit" className="inline-flex min-h-11 cursor-pointer items-center justify-center rounded-button bg-primary px-4 py-2 text-body font-medium text-surface hover:bg-primary-hover md:order-last">Salvar registro</button>
-          <Link to="/praticantes" className="inline-flex min-h-11 items-center justify-center rounded-button border border-border bg-surface px-4 py-2 text-body font-medium hover:bg-background">Cancelar</Link>
+        <div className="flex flex-col gap-4 md:flex-row md:justify-end">
+          <button type="submit" className="ui-button ui-button-primary md:order-last">Salvar registro</button>
+          <Link to="/praticantes" className="ui-button ui-button-secondary">Cancelar</Link>
         </div>
       </div>
     </form>
@@ -174,7 +178,7 @@ export default function NewSession() {
   return (
     <div className="max-w-form space-y-8">
       <header>
-        <h1 className="text-page font-semibold">Nova sessão</h1>
+        <h1 className="text-page font-bold">Nova sessão</h1>
         <p className="mt-2 text-body text-muted">Registre as informações observadas durante a sessão de equoterapia.</p>
       </header>
       <SessionForm key={practitionerId} practitionerId={practitionerId} />

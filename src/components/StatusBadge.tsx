@@ -2,7 +2,7 @@ import type { Practitioner } from '../data/practitioners'
 
 export default function StatusBadge({ status }: { status: Practitioner['status'] }) {
   return (
-    <span className={`inline-block rounded-badge px-2 py-1 text-small font-medium ${status === 'Ativo' ? 'bg-primary-soft text-primary' : 'bg-background text-muted'}`}>
+    <span className={`ui-badge ${status === 'Ativo' ? 'ui-badge-positive' : 'ui-badge-neutral'}`}>
       {status}
     </span>
   )

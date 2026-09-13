@@ -21,42 +21,42 @@ export default function PractitionerHistory() {
 
   return (
     <div className="max-w-[900px] space-y-8">
-      <Link to="/praticantes" className="inline-flex min-h-10 items-center gap-2 rounded-button text-secondary font-medium text-primary hover:underline">
+      <Link to="/praticantes" className="ui-link text-secondary">
         <ArrowLeft size={16} aria-hidden="true" />
         Voltar para praticantes
       </Link>
 
-      {!practitioner ? <h1 className="text-page font-semibold">Praticante não encontrado</h1> : (
+      {!practitioner ? <h1 className="text-page font-bold">Praticante não encontrado</h1> : (
         <>
-          <header className="flex flex-wrap items-start justify-between gap-4">
+          <header className="flex flex-wrap items-start justify-between gap-6 border-b border-border pb-8">
             <div>
-              <div className="flex flex-wrap items-center gap-3">
-                <h1 className="text-page font-semibold">{practitioner.name}</h1>
+              <div className="flex flex-wrap items-center gap-4">
+                <h1 className="text-page font-bold tracking-tight">{practitioner.name}</h1>
                 <StatusBadge status={practitioner.status} />
               </div>
               <p className="mt-2 text-body text-muted">
                 Última sessão: <time dateTime={practitioner.lastSession}>{new Intl.DateTimeFormat('pt-BR', { dateStyle: 'long', timeZone: 'UTC' }).format(new Date(practitioner.lastSession))}</time>
               </p>
             </div>
-            <Link to={`/sessoes/nova?praticante=${encodeURIComponent(practitioner.id)}`} className="inline-flex min-h-10 items-center justify-center gap-2 rounded-button bg-primary px-4 py-2 text-body font-medium text-surface hover:bg-primary-hover">
+            <Link to={`/sessoes/nova?praticante=${encodeURIComponent(practitioner.id)}`} className="ui-button ui-button-primary">
               <ClipboardPlus size={18} aria-hidden="true" />
               Nova sessão
             </Link>
           </header>
 
           {history && (
-            <dl aria-label="Resumo dos registros" className="grid gap-4 border-y border-border py-5 md:grid-cols-3">
-              <div className="flex flex-col gap-1">
+            <dl aria-label="Resumo dos registros" className="ui-card grid gap-6 md:grid-cols-3">
+              <div className="flex flex-col gap-2 md:border-r md:border-border md:pr-6">
                 <dt className="text-secondary text-muted">Sessões registradas</dt>
-                <dd className="order-first text-section font-semibold tabular-nums">{history.total}</dd>
+                <dd className="order-first font-heading text-section font-semibold text-brand-dark tabular-nums">{history.total}</dd>
               </div>
-              <div className="flex flex-col gap-1">
+              <div className="flex flex-col gap-2 md:border-r md:border-border md:pr-6">
                 <dt className="text-secondary text-muted">Primeiro registro</dt>
-                <dd className="order-first text-section font-semibold tabular-nums"><time dateTime={history.firstRecord}>{formatDate(history.firstRecord)}</time></dd>
+                <dd className="order-first font-heading text-section font-semibold text-brand-dark tabular-nums"><time dateTime={history.firstRecord}>{formatDate(history.firstRecord)}</time></dd>
               </div>
-              <div className="flex flex-col gap-1">
+              <div className="flex flex-col gap-2">
                 <dt className="text-secondary text-muted">Último registro</dt>
-                <dd className="order-first text-section font-semibold tabular-nums"><time dateTime={history.lastRecord}>{formatDate(history.lastRecord)}</time></dd>
+                <dd className="order-first font-heading text-section font-semibold text-brand-dark tabular-nums"><time dateTime={history.lastRecord}>{formatDate(history.lastRecord)}</time></dd>
               </div>
             </dl>
           )}
@@ -65,11 +65,11 @@ export default function PractitionerHistory() {
             <h2 id="history-heading" className="text-section font-semibold">Histórico de sessões</h2>
             {history ? (
               <>
-                <p className="mt-1 mb-6 text-secondary text-muted">{history.sessions.length} registros recentes exibidos de {history.total} sessões registradas neste exemplo fictício.</p>
+                <p className="mt-2 mb-8 text-secondary text-muted">{history.sessions.length} registros recentes exibidos de {history.total} sessões registradas neste exemplo fictício.</p>
                 <SessionTimeline key={practitioner.id} sessions={history.sessions} />
               </>
             ) : (
-              <p className="mt-4 border-t border-border py-5 text-body text-muted">Os registros deste praticante não estão disponíveis nesta demonstração.</p>
+              <p className="mt-4 border-t border-border py-6 text-body text-muted">Os registros deste praticante não estão disponíveis nesta demonstração.</p>
             )}
           </section>
 

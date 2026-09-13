@@ -6,7 +6,7 @@ import { countObservations, selectReportSessions, structuredFields } from '../ut
 import './Reports.css'
 
 const initialConfiguration = { practitionerId: 'gabriel-silva', start: '2026-08-20', end: '2026-09-10' }
-const controlClass = 'min-h-11 min-w-0 w-full rounded-input border border-border bg-surface px-3 py-2 text-body'
+const controlClass = 'ui-control'
 
 function formatDate(date: string) {
   return date.split('-').reverse().join('/')
@@ -59,12 +59,12 @@ export default function Reports() {
   return (
     <div className="reports-page max-w-form space-y-8">
       <header className="report-screen-only">
-        <h1 className="text-page font-semibold">Relatórios</h1>
+        <h1 className="text-page font-bold">Relatórios</h1>
         <p className="mt-2 text-body text-muted">Consolide os registros de sessões para consulta e elaboração de relatórios.</p>
       </header>
 
-      <section aria-labelledby="report-configuration-heading" className="report-screen-only">
-        <h2 id="report-configuration-heading" className="mb-4 text-section font-semibold">Configurar relatório</h2>
+      <section aria-labelledby="report-configuration-heading" className="report-screen-only ui-card">
+        <h2 id="report-configuration-heading" className="mb-5 text-section font-semibold">Configurar relatório</h2>
         <form noValidate onSubmit={generatePreview}>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
             <div className="min-w-0">
@@ -83,22 +83,22 @@ export default function Reports() {
               </div>
             ))}
           </div>
-          <button type="submit" className="mt-4 inline-flex min-h-11 w-full cursor-pointer items-center justify-center rounded-button bg-primary px-4 py-2 text-body font-medium text-surface hover:bg-primary-hover md:w-auto">Gerar visualização</button>
+          <button type="submit" className="ui-button ui-button-primary mt-5 w-full md:w-auto">Gerar visualização</button>
           <p role="status" className="mt-2 text-secondary text-muted">{feedback}</p>
         </form>
       </section>
 
       <section aria-labelledby="report-preview-heading">
-        <div className="report-screen-only mb-4 flex flex-wrap items-center justify-between gap-3">
+        <div className="report-screen-only mb-4 flex flex-wrap items-center justify-between gap-4">
           <h2 ref={previewHeading} tabIndex={-1} id="report-preview-heading" className="text-section font-semibold">Visualização do relatório</h2>
-          {sessions.length > 0 && <button type="button" onClick={() => window.print()} className="inline-flex min-h-10 cursor-pointer items-center justify-center gap-2 rounded-button border border-border bg-surface px-3 py-2 text-secondary font-medium hover:bg-background"><Printer size={16} aria-hidden="true" />Imprimir</button>}
+          {sessions.length > 0 && <button type="button" onClick={() => window.print()} className="ui-button ui-button-secondary text-secondary"><Printer size={16} aria-hidden="true" />Imprimir</button>}
         </div>
 
-        <article className="report-document rounded-card border border-border bg-surface p-5 md:p-10" aria-label={`Relatório de acompanhamento de ${practitioner.name}`}>
-          <header className="border-b border-border pb-6">
-            <p className="text-body font-semibold text-primary">EquoTrack</p>
-            <h3 className="mt-2 text-section font-semibold">Relatório de acompanhamento</h3>
-            <dl className="mt-5 space-y-2 text-body">
+        <article className="report-document ui-card md:p-10" aria-label={`Relatório de acompanhamento de ${practitioner.name}`}>
+          <header className="border-b-2 border-brand-soft pb-8">
+            <p className="text-body font-semibold tracking-wide text-brand">EquoTrack</p>
+            <h3 className="mt-3 text-section font-semibold">Relatório de acompanhamento</h3>
+            <dl className="mt-6 space-y-2 text-body">
               <div className="flex flex-wrap gap-x-2"><dt className="text-muted">Praticante:</dt><dd className="font-medium">{practitioner.name}</dd></div>
               <div className="flex flex-wrap gap-x-2"><dt className="text-muted">Período:</dt><dd className="tabular-nums">{periodLabel(configuration.start, configuration.end)}</dd></div>
               <div className="flex flex-wrap gap-x-2"><dt className="text-muted">Sessões consideradas:</dt><dd className="tabular-nums">{sessions.length}</dd></div>
@@ -115,10 +115,10 @@ export default function Reports() {
               <p className="my-6 text-body leading-6">Este relatório consolida os registros das sessões realizadas no período selecionado, reunindo informações estruturadas e observações narrativas registradas ao longo do acompanhamento.</p>
               <section aria-labelledby="structured-report-heading">
                 <h4 id="structured-report-heading" className="text-section font-semibold">Síntese dos registros estruturados</h4>
-                <div className="mt-5 grid grid-cols-1 gap-x-8 gap-y-5 md:grid-cols-2">
+                <div className="mt-6 grid grid-cols-1 gap-x-8 gap-y-5 md:grid-cols-2">
                   {structuredFields.map(({ key, label }) => (
-                    <div key={key} className="report-observation-group">
-                      <h5 className="mb-2 text-body font-semibold">{label}</h5>
+                    <div key={key} className="report-observation-group border-l-2 border-brand-soft pl-4">
+                      <h5 className="mb-2 text-body font-semibold text-brand-dark">{label}</h5>
                       <dl className="space-y-1 text-secondary">
                         {countObservations(sessions, key).map(({ value, count }) => (
                           <div key={value} className="flex flex-wrap gap-x-2"><dt>{value}:</dt><dd className="text-muted">{count} {count === 1 ? 'registro' : 'registros'}</dd></div>
@@ -133,8 +133,8 @@ export default function Reports() {
                 <h4 id="period-records-heading" className="text-section font-semibold">Registros do período</h4>
                 <ol className="mt-4 divide-y divide-border">
                   {sessions.map((session) => (
-                    <li key={session.number} className="report-session py-5 first:pt-0">
-                      <h5 className="text-body font-semibold"><time dateTime={session.date}>{formatDate(session.date)}</time> — Sessão #{session.number}</h5>
+                    <li key={session.number} className="report-session py-6 first:pt-0">
+                      <h5 className="font-heading text-subsection font-semibold text-brand-dark"><time dateTime={session.date}>{formatDate(session.date)}</time> <span className="font-sans text-body font-semibold text-foreground">— Sessão #{session.number}</span></h5>
                       <dl className="mt-3 space-y-3 text-body leading-6">
                         <div><dt className="text-secondary font-medium">Atividades:</dt><dd>{session.activities}</dd></div>
                         <div><dt className="text-secondary font-medium">Observação:</dt><dd>{session.observation}</dd></div>
